@@ -8,7 +8,7 @@
 name: CD pipeline - push to docker
 
 on:
-  pull_request:
+  push:
     branches:
       - main
 
