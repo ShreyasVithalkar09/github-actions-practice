@@ -28,7 +28,11 @@ jobs:
           password: ${{ SECRETS.DOCKERHUB_TOKEN }}
 
       - name: Build Image
-        run: docker build -t ${{ SECRETS.DOCKERHUB_USERNAME }}/flaskapp:latest
+        run: |
+          cd flask-app
+          docker build -t ${{ SECRETS.DOCKERHUB_USERNAME }}/flaskapp:latest .
 
       - name: Push Image
-        run: docker push ${{ SECRETS.DOCKERHUB_USERNAME }}/flaskapp:latest
+        run: |
+          cd flask-app
+          docker push ${{ SECRETS.DOCKERHUB_USERNAME }}/flaskapp:latest
