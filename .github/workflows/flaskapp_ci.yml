@@ -1,0 +1,39 @@
+# on push to test branch
+# checkout
+# install dependencies and setup env python
+# test
+
+name: CI pipeline for flask app and tests
+
+on:
+  push:
+    branches:
+      - testing
+
+jobs:
+  test:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.9", "3.10"]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Set up python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          cd flask-app
+
+          pip install -r requirements.txt
+
+      - name: Test the flask-app
+        run: |
+          pytest test_app.py

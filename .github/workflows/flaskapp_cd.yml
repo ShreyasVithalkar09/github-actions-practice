@@ -1,0 +1,34 @@
+# on PR to main from test branch
+# checkout
+# install dependencies and setup env python
+# test
+# build docker image
+# push to dockerhub
+
+name: CD pipeline - push to docker
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  Build-and-deploy:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Docker login
+        uses: docker/login-action@v3
+        with:
+          username: ${{ SECRETS.DOCKERHUB_USERNAME }}
+          pawword: ${{ SECRETS.DOCKERHUB_TOKEN }}
+
+      - name: Build Image
+        run: docker build -t ${{ SECRETS.DOCKERHUB_USERNAME }}/flaskapp:latest
+
+      - name: Push Image
+        run: docker push ${{ SECRETS.DOCKERHUB_USERNAME }}/flaskapp:latest
