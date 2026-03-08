@@ -36,4 +36,5 @@ jobs:
 
       - name: Test the flask-app
         run: |
+          cd flask-app
           pytest test_app.py
