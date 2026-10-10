@@ -1,0 +1,30 @@
+name: Deployment Scenario
+
+on:
+    workflow_dispatch:
+        inputs:
+            target_env:
+                description: 'Target env to deploy'
+                required: true
+                default: 'staging'
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Print target environment
+              run: echo "Deploying to ${{ github.event.inputs.target_env }}"
+
+            - name: Simulate Deployment Step
+              run: |
+                echo "Running deployment tasks..."
+                exit 0
+            
+            - name: Notify on failure
+              if: failure()
+              run: echo "::Error::Deployment failed! Alerting engineer"
+
+            - name: Always run cleanup
+              if: always()
+              run: echo "Clean up temp. artifacts"
+
