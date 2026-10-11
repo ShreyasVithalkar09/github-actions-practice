@@ -17,10 +17,10 @@ jobs:
       - name: Generate Output and Environment Variable
         id: build-step
         run: |
-          echo "version=v1.2.3-beta >> $GITHUB_OUTPUT"
+          echo "version=v1.2.3-beta" >> $GITHUB_OUTPUT
 
           # 2. Set an environment variable for subsequent steps
-          echo "DEPLOY_ENV=staging >> $GITHUB_ENV"
+          echo "DEPLOY_ENV=staging" >> $GITHUB_ENV
 
       - name: Mask a Dynamic Secret
         run: |
