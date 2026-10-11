@@ -1,0 +1,38 @@
+name: Workflow commands demo
+
+on: 
+  workflow_dispatch:
+
+jobs:
+  demo_job:
+    runs-on: ubuntu-slim
+    steps:
+      - name: Group Initialization Logs
+        run: |
+          echo "::group::Setup Phase"
+          echo "Initializing build environment..."
+          echo "Checking system dependencies..."
+          echo "::endgroup::"
+          
+      - name: Generate Output and Environment Variable
+        id: build-step
+        run: |
+          echo "version=v1.2.3-beta >> $GITHUB_OUTPUT"
+
+          # 2. Set an environment variable for subsequent steps
+          echo "DEPLOY_ENV=staging >> $GITHUB_ENV"
+
+      - name: Mask a Dynamic Secret
+        run: |
+          DYNAMIC_SECRET="SuperSecretToken987"
+          # Mask the secret in logs
+          echo "::add-mask::$$DYNAMIC_SECRET"
+          echo "The dynamic secret is: $DYNAMIC_SECRET"
+
+      - name: Consume Previous Step Outputs & Env Vars
+        run: |
+          echo "The build version is: ${{ steps.build-step.outputs.version }}"
+          echo "The deployment env. is: $DEPLOY_ENV"
+
+        
+      
