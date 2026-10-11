@@ -26,7 +26,7 @@ jobs:
         run: |
           DYNAMIC_SECRET="SuperSecretToken987"
           # Mask the secret in logs
-          echo "::add-mask::$$DYNAMIC_SECRET"
+          echo "::add-mask::$DYNAMIC_SECRET"
           echo "The dynamic secret is: $DYNAMIC_SECRET"
 
       - name: Consume Previous Step Outputs & Env Vars
