@@ -1,0 +1,30 @@
+name: Advanced Pipeline Demo
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run Unit Tests
+        run: echo "Tests passed successfully!"
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build Artifact
+        run: echo "Building package for release..."
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Simulate Deployment
+        run: |
+          echo "Triggered by actor: ${{ github.actor }}"
+          echo "Running on repository: ${{ github.repository }}"
+          echo "Deploying release using ephemeral GITHUB_TOKEN..."
